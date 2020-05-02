@@ -8,7 +8,7 @@ localedef -i fr_FR -c -f UTF-8 -A /usr/share/locale/locale.alias fr_FR.UTF-8
 
 export LANG=en_US.utf8
 
-# Install needed python-dev packages
+# Install needed packages (rsyslog)
 LC_ALL=C DEBIAN_FRONTEND=noninteractive apt-get install -qy --no-install-recommends rsyslog
 
 #--
