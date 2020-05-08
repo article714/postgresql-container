@@ -12,8 +12,10 @@ build_image:
   stage: build
   tags:
     - shell
+  variables:
+    BUILD_OPTS: '--force-rm --no-cache'
   script:
-    - docker build --force-rm -t certificare/postgresql:${POSTGRES_CERTIFICARE_VERSION} -t ${DOCKER_REGISTRY_HOST}/certificare/postgresql:${POSTGRES_CERTIFICARE_VERSION} --build-arg POSTGRES_CERTIFICARE_VERSION=${POSTGRES_CERTIFICARE_VERSION} .
+    - docker build ${BUILD_OPTS} --force-rm -t certificare/postgresql:${POSTGRES_CERTIFICARE_VERSION} -t ${DOCKER_REGISTRY_HOST}/certificare/postgresql:${POSTGRES_CERTIFICARE_VERSION} --build-arg POSTGRES_CERTIFICARE_VERSION=${POSTGRES_CERTIFICARE_VERSION} .
 
 #------------------------------------------
 # QCheck (TODO)
