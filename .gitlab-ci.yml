@@ -37,9 +37,9 @@ build_image_pg11:
 test_image_pg10:
   stage: tests
   image:
-    name: article714/postgresql:${POSTGRES_CONTAINER_VERSION}
+    name: article714/postgresql:10.${POSTGRES_CONTAINER_VERSION}
   services:
-    - name: article714/postgresql:${POSTGRES_CONTAINER_VERSION}
+    - name: article714/postgresql:10.${POSTGRES_CONTAINER_VERSION}
       alias: pg-srv
   tags:
     - docker
@@ -50,12 +50,22 @@ test_image_pg10:
 test_image_pg11:
   stage: tests
   image:
-    name: article714/postgresql:${POSTGRES_CONTAINER_VERSION}
+    name: article714/postgresql:11.${POSTGRES_CONTAINER_VERSION}
   services:
-    - name: article714/postgresql:${POSTGRES_CONTAINER_VERSION}
+    - name: article714/postgresql:11.${POSTGRES_CONTAINER_VERSION}
       alias: pg-srv
   tags:
     - docker
   script:
     # wait for bindns to be fully fit
     - echo "TODO"
+
+#---------------------------------------------
+# publish
+
+publish_image_pg11:
+  stage: publish_images
+  tags:
+    - shell
+  script:
+    - docker push article714/postgresql:11.${POSTGRES_CONTAINER_VERSION}
