@@ -26,7 +26,7 @@ build_image_pg11:
     BUILD_OPTS: "--force-rm --no-cache"
   script:
     - cp -a container 11/
-    - docker build ${BUILD_OPTS} --force-rm -t article714/postgresql:$11.{POSTGRES_CONTAINER_VERSION} --build-arg POSTGRES_CONTAINER_VERSION=11.${POSTGRES_CONTAINER_VERSION} 11
+    - docker build ${BUILD_OPTS} --force-rm -t article714/postgresql:11.${POSTGRES_CONTAINER_VERSION} --build-arg POSTGRES_CONTAINER_VERSION=11.${POSTGRES_CONTAINER_VERSION} 11
 
 #------------------------------------------
 # QCheck (TODO)
