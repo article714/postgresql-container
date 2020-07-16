@@ -4,18 +4,27 @@ stages:
   - publish_images
 
 variables:
-  POSTGRES_CERTIFICARE_VERSION: '10.0.1'
-  DOCKER_REGISTRY_HOST: '83l02d2f.gra5.container-registry.ovh.net'
+  POSTGRES_CONTAINER_VERSION: "0.2"
 
 #-----------------------------------------
-build_image:
+build_image_pg10:
   stage: build
   tags:
     - shell
   variables:
-    BUILD_OPTS: '--force-rm --no-cache'
+    BUILD_OPTS: "--force-rm --no-cache"
   script:
-    - docker build ${BUILD_OPTS} --force-rm -t certificare/postgresql:${POSTGRES_CERTIFICARE_VERSION} -t ${DOCKER_REGISTRY_HOST}/certificare/postgresql:${POSTGRES_CERTIFICARE_VERSION} --build-arg POSTGRES_CERTIFICARE_VERSION=${POSTGRES_CERTIFICARE_VERSION} .
+    - docker build ${BUILD_OPTS} --force-rm -t article714/postgresql:10.${POSTGRES_CONTAINER_VERSION} --build-arg POSTGRES_CONTAINER_VERSION=10.${POSTGRES_CONTAINER_VERSION} 10
+
+#-----------------------------------------
+build_image_pg11:
+  stage: build
+  tags:
+    - shell
+  variables:
+    BUILD_OPTS: "--force-rm --no-cache"
+  script:
+    - docker build ${BUILD_OPTS} --force-rm -t article714/postgresql:$11.{POSTGRES_CONTAINER_VERSION} --build-arg POSTGRES_CONTAINER_VERSION=11.${POSTGRES_CONTAINER_VERSION} 11
 
 #------------------------------------------
 # QCheck (TODO)
@@ -23,12 +32,12 @@ build_image:
 #------------------------------------------
 # Tests
 
-test_image:
+test_image_pg10:
   stage: tests
   image:
-    name: certificare/postgresql:${POSTGRES_CERTIFICARE_VERSION}
+    name: article714/postgresql:${POSTGRES_CONTAINER_VERSION}
   services:
-    - name: certificare/postgresql:${POSTGRES_CERTIFICARE_VERSION}
+    - name: article714/postgresql:${POSTGRES_CONTAINER_VERSION}
       alias: pg-srv
   tags:
     - docker
@@ -36,14 +45,15 @@ test_image:
     # wait for bindns to be fully fit
     - echo "TODO"
 
-#------------------------------------------
-# Publish
-publish_image:
-  stage: publish_images
+test_image_pg11:
+  stage: tests
+  image:
+    name: article714/postgresql:${POSTGRES_CONTAINER_VERSION}
+  services:
+    - name: article714/postgresql:${POSTGRES_CONTAINER_VERSION}
+      alias: pg-srv
   tags:
-    - shell
-  only:
-    refs:
-      - production
+    - docker
   script:
-    - docker push ${DOCKER_REGISTRY_HOST}/certificare/postgresql:${POSTGRES_CERTIFICARE_VERSION}
+    # wait for bindns to be fully fit
+    - echo "TODO"

@@ -1,5 +1,5 @@
-FROM postgres:10
-LABEL maintainer="Certificare C. Guychard<christophe@certificare.fr>"
+FROM postgres:11
+LABEL maintainer="C. Guychard<christophe@article714.org>"
 
 
 
@@ -12,5 +12,5 @@ COPY container /container
 
 # container building
 
-RUN /container/build.sh 
+RUN /container/build.sh
 
