@@ -14,8 +14,8 @@ build_image_pg10:
   variables:
     BUILD_OPTS: "--force-rm --no-cache"
   script:
-    - cp -a container 10/
-    - docker build ${BUILD_OPTS} --force-rm -t article714/postgresql:10.${POSTGRES_CONTAINER_VERSION} --build-arg POSTGRES_CONTAINER_VERSION=10.${POSTGRES_CONTAINER_VERSION} 10
+    - cp -a 10/Dockerfile .
+    - docker build ${BUILD_OPTS} --force-rm -t article714/postgresql:10.${POSTGRES_CONTAINER_VERSION} --build-arg POSTGRES_CONTAINER_VERSION=10.${POSTGRES_CONTAINER_VERSION} .
 
 #-----------------------------------------
 build_image_pg11:
@@ -25,8 +25,8 @@ build_image_pg11:
   variables:
     BUILD_OPTS: "--force-rm --no-cache"
   script:
-    - cp -a container 11/
-    - docker build ${BUILD_OPTS} --force-rm -t article714/postgresql:11.${POSTGRES_CONTAINER_VERSION} --build-arg POSTGRES_CONTAINER_VERSION=11.${POSTGRES_CONTAINER_VERSION} 11
+    - cp -a 11/Dockerfile .
+    - docker build ${BUILD_OPTS} --force-rm -t article714/postgresql:11.${POSTGRES_CONTAINER_VERSION} --build-arg POSTGRES_CONTAINER_VERSION=11.${POSTGRES_CONTAINER_VERSION} .
 
 #------------------------------------------
 # QCheck (TODO)
