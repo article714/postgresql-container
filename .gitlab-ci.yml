@@ -36,6 +36,11 @@ build_image_pg11:
 
 test_image_pg10:
   stage: tests
+  variables:
+    POSTGRES_DB: pgtest
+    POSTGRES_USER: odoo
+    POSTGRES_PASSWORD: odoo
+    POSTGRES_HOST_AUTH_METHOD: trust
   image:
     name: article714/postgresql:10.${POSTGRES_CONTAINER_VERSION}
   services:
@@ -44,11 +49,15 @@ test_image_pg10:
   tags:
     - docker
   script:
-    # wait for bindns to be fully fit
-    - echo "TODO"
+    - PGPASSWORD=odoo psql -h pg-srv -u odoo -w -l
 
 test_image_pg11:
   stage: tests
+  variables:
+    POSTGRES_DB: pgtest
+    POSTGRES_USER: odoo
+    POSTGRES_PASSWORD: odoo
+    POSTGRES_HOST_AUTH_METHOD: trust
   image:
     name: article714/postgresql:11.${POSTGRES_CONTAINER_VERSION}
   services:
@@ -57,15 +66,4 @@ test_image_pg11:
   tags:
     - docker
   script:
-    # wait for bindns to be fully fit
-    - echo "TODO"
-
-#---------------------------------------------
-# publish
-
-publish_image_pg11:
-  stage: publish_images
-  tags:
-    - shell
-  script:
-    - docker push article714/postgresql:11.${POSTGRES_CONTAINER_VERSION}
+    - PGPASSWORD=odoo psql -h pg-srv -u odoo -l
