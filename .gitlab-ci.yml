@@ -49,7 +49,7 @@ test_image_pg10:
   tags:
     - docker
   script:
-    - PGPASSWORD=pg_tst_user psql -h pg-srv -u pg_tst_user -w -l
+    - PGPASSWORD=pg_tst_user psql -h pg-srv -U pg_tst_user -w -l
 
 test_image_pg11:
   stage: tests
@@ -66,4 +66,4 @@ test_image_pg11:
   tags:
     - docker
   script:
-    - PGPASSWORD=pg_tst_user psql -h pg-srv -u pg_tst_user -l
+    - PGPASSWORD=pg_tst_user psql -h pg-srv -U pg_tst_user -l
