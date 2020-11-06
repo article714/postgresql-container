@@ -5,28 +5,20 @@ stages:
 
 variables:
   POSTGRES_CONTAINER_VERSION: "0.2"
+  POSTGRESQL_VERSION: "10"
 
 #-----------------------------------------
-build_image_pg10:
+# Build OCI image 
+
+build_image_pg:
   stage: build
   tags:
     - shell
   variables:
     BUILD_OPTS: "--force-rm --no-cache"
   script:
-    - cp -a 10/Dockerfile .
-    - docker build ${BUILD_OPTS} --force-rm -t article714/postgresql:10.${POSTGRES_CONTAINER_VERSION} --build-arg POSTGRES_CONTAINER_VERSION=10.${POSTGRES_CONTAINER_VERSION} .
+    - docker build ${BUILD_OPTS} --force-rm -t article714/postgresql:${POSTGRESQL_VERSION}.${POSTGRES_CONTAINER_VERSION} --build-arg POSTGRES_CONTAINER_VERSION=10.${POSTGRES_CONTAINER_VERSION} .
 
-#-----------------------------------------
-build_image_pg11:
-  stage: build
-  tags:
-    - shell
-  variables:
-    BUILD_OPTS: "--force-rm --no-cache"
-  script:
-    - cp -a 11/Dockerfile .
-    - docker build ${BUILD_OPTS} --force-rm -t article714/postgresql:11.${POSTGRES_CONTAINER_VERSION} --build-arg POSTGRES_CONTAINER_VERSION=11.${POSTGRES_CONTAINER_VERSION} .
 
 #------------------------------------------
 # QCheck (TODO)
@@ -34,7 +26,7 @@ build_image_pg11:
 #------------------------------------------
 # Tests
 
-test_image_pg10:
+test_image:
   stage: tests
   variables:
     POSTGRES_DB: pgtest
@@ -42,28 +34,11 @@ test_image_pg10:
     POSTGRES_PASSWORD: a_tst_user
     POSTGRES_HOST_AUTH_METHOD: trust
   image:
-    name: article714/postgresql:10.${POSTGRES_CONTAINER_VERSION}
+    name: article714/postgresql:${POSTGRESQL_VERSION}.${POSTGRES_CONTAINER_VERSION}
   services:
-    - name: article714/postgresql:10.${POSTGRES_CONTAINER_VERSION}
+    - name: article714/postgresql:${POSTGRESQL_VERSION}.${POSTGRES_CONTAINER_VERSION}
       alias: pg-srv
   tags:
     - docker
   script:
     - PGPASSWORD=a_tst_user psql -h pg-srv -U a_tst_user -w -l
-
-test_image_pg11:
-  stage: tests
-  variables:
-    POSTGRES_DB: pgtest
-    POSTGRES_USER: a_tst_user
-    POSTGRES_PASSWORD: a_tst_user
-    POSTGRES_HOST_AUTH_METHOD: trust
-  image:
-    name: article714/postgresql:11.${POSTGRES_CONTAINER_VERSION}
-  services:
-    - name: article714/postgresql:11.${POSTGRES_CONTAINER_VERSION}
-      alias: pg-srv
-  tags:
-    - docker
-  script:
-    - PGPASSWORD=a_tst_user psql -h pg-srv -U a_tst_user -l
