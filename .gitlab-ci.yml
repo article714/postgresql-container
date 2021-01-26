@@ -4,7 +4,7 @@ stages:
   - publish_images
 
 variables:
-  POSTGRES_CONTAINER_VERSION: "0.2"
+  POSTGRES_CONTAINER_VERSION: "0.3"
   POSTGRESQL_VERSION: "10"
 
 #-----------------------------------------
