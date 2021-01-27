@@ -4,21 +4,20 @@ stages:
   - publish_images
 
 variables:
-  POSTGRES_CONTAINER_VERSION: "0.3"
-  POSTGRESQL_VERSION: "11"
+  POSTGRES_CONTAINER_VERSION: '0.4'
+  POSTGRESQL_VERSION: '11'
 
 #-----------------------------------------
-# Build OCI image 
+# Build OCI image
 
 build_image_pg:
   stage: build
   tags:
     - shell
   variables:
-    BUILD_OPTS: "--network=internal_bridge --force-rm --no-cache"
+    BUILD_OPTS: '--network=internal_bridge --force-rm --no-cache'
   script:
     - docker build ${BUILD_OPTS} --force-rm -t article714/postgresql:${POSTGRESQL_VERSION}.${POSTGRES_CONTAINER_VERSION} --build-arg POSTGRES_CONTAINER_VERSION=10.${POSTGRES_CONTAINER_VERSION} .
-
 
 #------------------------------------------
 # QCheck (TODO)
